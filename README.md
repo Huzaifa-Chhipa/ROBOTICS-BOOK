@@ -71,4 +71,16 @@ The key directories and files in this project are:
 
 ## Contributing
 
-Contributions are welcome! Please refer to the `CONTRIBUTING.md` file (if exists) for guidelines on how to contribute.
+We welcome contributions to this textbook! If you find errors, have suggestions for improvements, or want to add new content, please consider contributing.
+
+### How to Contribute
+
+1.  **Fork** this repository.
+2.  **Clone** your forked repository to your local machine.
+3.  Create a new **branch** for your changes.
+4.  Make your **modifications** or add new content.
+5.  **Commit** your changes with clear, descriptive messages.
+6.  **Push** your branch to your forked repository.
+7.  Open a **Pull Request (PR)** to the `main` branch of this repository.
+
+Please ensure your contributions adhere to the existing style and content guidelines. For more detailed contribution guidelines, please see [CONTRIBUTING.md](CONTRIBUTING.md).
