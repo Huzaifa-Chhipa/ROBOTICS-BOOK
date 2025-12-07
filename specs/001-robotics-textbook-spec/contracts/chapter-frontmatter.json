@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Docusaurus Chapter Frontmatter Schema",
+  "description": "Schema for validating the frontmatter of Docusaurus textbook chapters.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the chapter.",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "A brief description or summary of the chapter.",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "description": "The URL-friendly slug for the chapter.",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "week": {
+      "type": "integer",
+      "description": "The week number to which the chapter belongs (1-13).",
+      "minimum": 1,
+      "maximum": 13
+    },
+    "module": {
+      "type": "string",
+      "description": "The module name to which the chapter belongs.",
+      "minLength": 1
+    },
+    "prerequisites": {
+      "type": "array",
+      "description": "A list of chapter slugs that are prerequisites for this chapter.",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      },
+      "uniqueItems": true
+    },
+    "learningObjectives": {
+      "type": "array",
+      "description": "A list of learning objectives for the chapter.",
+      "items": {
+        "type": "string",
+        "minLength": 5
+      },
+      "minItems": 1
+    },
+    "estimatedTime": {
+      "type": "integer",
+      "description": "Estimated time to complete the chapter in minutes.",
+      "minimum": 10
+    },
+    "difficultyLevel": {
+      "type": "string",
+      "description": "The difficulty level of the chapter.",
+      "enum": ["Beginner", "Intermediate", "Advanced"]
+    },
+    "assessmentType": {
+      "type": "string",
+      "description": "The type of assessment associated with this chapter (optional).",
+      "enum": ["Quiz", "Lab", "Project", "Exam"],
+      "default": "None"
+    },
+    "sidebar_label": {
+      "type": "string",
+      "description": "The label to display in the sidebar. Defaults to title if not provided.",
+      "minLength": 1
+    },
+    "position": {
+      "type": "integer",
+      "description": "The position of the chapter in the sidebar. Lower numbers appear higher.",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "slug",
+    "week",
+    "module",
+    "learningObjectives",
+    "estimatedTime",
+    "difficultyLevel"
+  ],
+  "additionalProperties": false
+}

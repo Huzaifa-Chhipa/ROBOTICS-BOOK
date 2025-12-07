@@ -1,0 +1,43 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Use Node.js 18 or higher for Docusaurus 3
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Docusaurus site
+        run: npm run build
+
+      - name: Start Docusaurus server
+        run: npm run serve & # Run in background
+        working-directory: ./build # Serve from the built output directory
+
+      - name: Wait for server to be ready
+        run: sleep 10 # Give the server some time to start
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          # Optional: Configure the URLs to audit
+          urls: |
+            http://localhost:8000
+            http://localhost:8000/docs/intro
+          # Optional: Configure performance budgets, etc.
+          # For more options, see https://github.com/treosh/lighthouse-ci-action#inputs

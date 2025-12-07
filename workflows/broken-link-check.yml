@@ -1,0 +1,35 @@
+name: Broken Link Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Docusaurus site
+        run: npm run build
+
+      - name: Run Lychee Link Checker
+        uses: lycheeverse/lychee-action@v1.9.0
+        with:
+          # Point Lychee to check the built Docusaurus site
+          args: './build'
+          # Optional: Configure exclude patterns
+          # exclude: 'http://localhost:8000' # Example to exclude localhost links if needed
+          # Optional: Configure more options, see https://github.com/lycheeverse/lychee-action#inputs

@@ -1,0 +1,73 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Light gradient background */
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* Space between buttons */
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  background-color: var(--ifm-background-color); /* Use Docusaurus theme background */
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+  margin-bottom: 1rem;
+  color: var(--ifm-color-info); /* Use info color for SVG fill, often a blue */
+}
+
+.courseStructure {
+  padding: 4rem 0;
+  background-color: var(--ifm-color-emphasis-100); /* Slightly darker background for contrast */
+}
+
+.courseStructure .card {
+  box-shadow: var(--ifm-shadow-md);
+  border-radius: var(--ifm-border-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem; /* Space between cards in a column */
+  background-color: var(--ifm-background-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.courseStructure .card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--ifm-shadow-lg);
+}
+
+.courseStructure .card h3 {
+  margin-top: 0;
+  color: var(--ifm-color-primary);
+}
+
+@media screen and (max-width: 768px) {
+  .featureSvg {
+    height: 150px;
+    width: 150px;
+  }
+  .courseStructure .card {
+    margin-bottom: 1rem;
+  }
+}
