@@ -1,51 +1,55 @@
-<!--
-    == SYNC IMPACT REPORT ==
-    Version: 0.0.0 -> 1.0.0 (Initial constitution)
-    Sections Added:
-    - Principle I: Content Accuracy & Technical Rigor
-    - Principle II: Educational Clarity & Accessibility
-    - Principle III: Consistency & Standards
-    - Principle IV: Docusaurus Structure & Quality
-    - Principle V: Code Example Quality
-    - Principle VI: Deployment & Publishing Standards
-    - Principle VII: Risk Management & Future Updates
-    - Governance
-    Templates Checked for Consistency (✅):
-    - .specify/templates/plan-template.md
-    - .specify/templates/spec-template.md
-    - .specify/templates/tasks-template.md
-    - .specify/templates/adr-template.md
-    - .specify/templates/agent-file-template.md
-    - .specify/templates/checklist-template.md
-    - .specify/templates/phr-template.prompt.md
-    Follow-up TODOs: None
--->
-# Physical AI & Humanoid Robotics Constitution
+# [PROJECT_NAME] Constitution
+<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
 ## Core Principles
 
-### I. Content Accuracy & Technical Rigor
-All chapters, examples, and hardware specifications MUST be technically correct and peer-reviewed. Code snippets and simulations MUST include citations, versioning information for dependencies, and be validated against a reference implementation or hardware.
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-### II. Educational Clarity & Accessibility
-Every chapter template MUST follow a consistent structure: Learning Objectives → Prerequisites → Main Content → Summary → Exercises → References. All content MUST define prerequisite knowledge and include metadata for estimated completion time, learning objectives, and difficulty level (Beginner, Intermediate, Advanced).
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
 
-### III. Consistency & Standards
-A mandatory frontmatter schema MUST be enforced for all Markdown-based chapters to ensure uniformity. A central glossary and a notation guide will serve as the single sources of truth for terminology and symbols. A strict naming convention for chapters, modules, files, and images MUST be followed.
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-### IV. Docusaurus Structure & Quality
-The Docusaurus sidebar navigation MUST be structured to reflect the textbook's organization into modules, weeks, and chapters, using collapsible categories for clarity. All images MUST be optimized for web delivery and include descriptive alt text for accessibility. Chapter frontmatter MUST include all required metadata fields for SEO and site generation.
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
 
-### V. Code Example Quality
-All embedded code snippets MUST explicitly specify the programming language, list all dependencies, and include clear safety guidelines or warnings where applicable. Any deviation from standard project structure, such as not including code in a corresponding `/examples/` directory, MUST be explicitly justified in the text.
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-### VI. Deployment & Publishing Standards
-The project MUST be deployable to GitHub Pages. Continuous integration MUST be configured to perform build validation, check for broken links, and run Lighthouse CI scans to enforce performance, SEO, and accessibility standards. The publishing process MUST support incremental updates, allowing for the release of individual weeks or modules.
+### [PRINCIPLE_6_NAME]
 
-### VII. Risk Management & Future Updates
-All project plans MUST document potential risks, including but not limited to hardware costs, simulation latency, and syllabus changes, along with mitigation strategies. A formal plan MUST be maintained for future content updates to adapt to the evolution of robotics software and hardware.
+
+[PRINCIPLE__DESCRIPTION]
+
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
 
 ## Governance
-This constitution is the authoritative source for all project standards. All specifications, plans, and tasks MUST adhere to these principles. Amendments require a documented proposal, review, and an approved migration plan for existing content. Compliance will be enforced through automated checks and manual reviews.
+<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-07 | **Last Amended**: 2025-12-07
+[GOVERNANCE_RULES]
+<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+
+**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->

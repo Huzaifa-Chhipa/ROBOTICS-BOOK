@@ -1,6 +1,3 @@
-description = "Review planning artifacts for architecturally significant decisions and create ADRs."
-
-prompt = """
 ---
 description: Review planning artifacts for architecturally significant decisions and create ADRs.
 ---
@@ -208,4 +205,3 @@ As the main request completes, you MUST create and complete a PHR (Prompt Histor
 4) Validate + report
    - No unresolved placeholders; path under `history/prompts/` and matches stage; stage/title/date coherent; print ID + path + stage + title.
    - On failure: warn, don't block. Skip only for `/sp.phr`.
-"""
