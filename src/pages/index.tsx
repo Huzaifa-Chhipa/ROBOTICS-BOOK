@@ -26,7 +26,7 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/module1/week1/chapter-01-intro"> {/* Link to the first chapter of the first module */}
+            to="/docs/module-1-foundations/week-1-ai-fundamentals/chapter-01-intro"> {/* Link to the first chapter of the first module */}
             Explore Modules
           </Link>
         </div>
