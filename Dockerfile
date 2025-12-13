@@ -5,9 +5,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY Backend ./Backend
+# Use lowercase folder name
+COPY backend ./backend
 
-# 🔥 THIS LINE FIXES EVERYTHING
+# Set Python path so modules are found
 ENV PYTHONPATH=/app
 
-CMD ["sh", "-c", "uvicorn Backend.src.main:app --host 0.0.0.0 --port $PORT"]
+# Start FastAPI app
+CMD ["sh", "-c", "uvicorn backend.src.main:app --host 0.0.0.0 --port $PORT"]
