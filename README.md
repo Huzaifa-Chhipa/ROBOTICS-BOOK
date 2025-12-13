@@ -121,6 +121,18 @@ The frontend will automatically proxy API requests from `http://localhost:3000/a
 
 For detailed setup instructions, see [CHATBOT_SETUP.md](CHATBOT_SETUP.md).
 
+## Deployment
+
+For production deployment:
+
+### Option 1: Separate Backend and Frontend (Recommended)
+1. Deploy the backend to a Python-compatible platform (Render, Railway, etc.)
+2. Deploy the frontend to Vercel/Netlify with `REACT_APP_API_URL` environment variable pointing to your backend
+
+### Option 2: Combined Deployment (Advanced)
+1. Use the provided `vercel.json` configuration to deploy both together
+2. Ensure all dependencies in `requirements.txt` are compatible with the deployment platform
+
 ## Contributing
 
 We welcome contributions to this textbook! If you find errors, have suggestions for improvements, or want to add new content, please consider contributing.

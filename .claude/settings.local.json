@@ -219,7 +219,13 @@
       "Bash(cmd /c \"dir /s *.env*\")",
       "Bash(npm install path-browserify)",
       "Bash(npm run clear)",
-      "Bash(git add -A)"
+      "Bash(git add -A)",
+      "Bash(git commit -m \"Connect chatbot to frontend with improved error handling and build fixes\n\n- Updated chatbot component with environment-aware API connection\n- Enhanced error handling with specific error messages\n- Fixed build issues by simplifying webpack configuration\n- Added documentation and startup scripts\n- Improved connection logic for localhost vs production\n- Added proxy configuration in package.json\n- Created comprehensive setup guides\")",
+      "Bash(dir /s backend*.txt)",
+      "Bash(cmd /c \"dir backend\\*.txt /s\")",
+      "Bash(dir backend /s)",
+      "Bash(cmd /c \"dir backend /s\")",
+      "Bash(cmd /c \"dir *.txt\")"
     ],
     "deny": [],
     "ask": []

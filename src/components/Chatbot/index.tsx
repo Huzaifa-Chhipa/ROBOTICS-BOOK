@@ -47,9 +47,19 @@ const Chatbot = () => {
     try {
       // Determine the API URL based on environment
       // If running on localhost, connect to backend at port 8000
+      // For production, you can set the backend URL via environment variable or use the same domain
       const isLocalhost = typeof window !== 'undefined' &&
         (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-      const apiUrl = isLocalhost ? 'http://localhost:8000/api/v1/' : '/api/v1/';
+
+      let apiUrl;
+      if (isLocalhost) {
+        apiUrl = 'http://localhost:8000/api/v1/';
+      } else {
+        // For production, you can either:
+        // 1. Use same domain if backend is served from same domain: '/api/v1/'
+        // 2. Use a specific backend URL from environment or configuration
+        apiUrl = process.env.REACT_APP_API_URL || '/api/v1/';
+      }
 
       const response = await fetch(apiUrl, {
         method: 'POST',

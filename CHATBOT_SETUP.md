@@ -121,11 +121,56 @@ curl -X POST http://localhost:8000/api/v1/ \
 
 ## Deployment
 
-For production deployment:
+### For Vercel Deployment
 
-1. Build the Docusaurus frontend with `npm run build`
-2. The backend serves the static files from the `build` directory
-3. Set appropriate environment variables for your deployment environment
-4. The chatbot will connect to the backend API automatically
+To deploy the application to Vercel:
 
-The system is designed to work as a unified application where both frontend and backend run on the same domain, avoiding CORS issues.
+1. **Deploy the backend first** to a server or cloud platform that can run FastAPI
+2. **Set environment variables in Vercel**:
+   - `REACT_APP_API_URL`: Set this to your backend server URL (e.g., `https://your-backend-app.onrender.com/api/v1/` or `https://your-backend.vercel.app/api/v1/`)
+3. **Deploy the frontend** using the Vercel dashboard or CLI
+
+### Alternative: Deploy Backend to Vercel Functions
+
+You can also deploy the backend as Vercel serverless functions (recommended approach):
+
+1. The `vercel.json` file is configured to handle both frontend and backend
+2. Make sure all required dependencies are in `requirements.txt`
+3. Build the Docusaurus site first: `npm run build`
+4. Deploy using the Vercel CLI: `vercel`
+
+### Recommended: Separate Backend Deployment (Most Reliable)
+
+For the most reliable deployment:
+
+1. **Deploy the backend separately** using a platform that supports FastAPI:
+   - **Render.com**: Create a new web service with your backend code
+   - **Railway.app**: Deploy your Python backend
+   - **Heroku**: With Python buildpack
+   - **Self-hosted**: Any server that can run Python/FastAPI
+
+2. **Set the backend URL** as an environment variable in Vercel:
+   - Go to your Vercel dashboard
+   - Navigate to your project settings
+   - Go to Environment Variables
+   - Add: `REACT_APP_API_URL` = `https://your-backend-app.onrender.com/api/v1/` (replace with your actual backend URL)
+
+3. **Deploy the frontend** to Vercel as a static site
+
+This approach is more reliable because:
+- The backend runs continuously on a dedicated server
+- No cold start issues for API requests
+- Better resource allocation for AI processing
+- Easier to manage dependencies and environment variables
+
+### Environment Configuration
+
+When deploying, ensure you set the following environment variables:
+
+- `GEMINI_API_KEY`: Your Google Gemini API key
+- `COHERE_API_KEY`: Your Cohere API key
+- `QDRANT_URL`: Your Qdrant vector database URL
+- `QDRANT_API_KEY`: Your Qdrant API key
+- `REACT_APP_API_URL`: The URL where your backend API is hosted (for production)
+
+The system works best when both frontend and backend are accessible from the same domain or when CORS is properly configured.
