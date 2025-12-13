@@ -32,8 +32,11 @@ app.add_middleware(
 current_file_path = Path(__file__).resolve()
 static_dir = current_file_path.parent.parent.parent / "build"
 
-# Serve static files
-app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+# Serve static files only if the directory exists
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+else:
+    print(f"Warning: Static files directory '{static_dir}' does not exist. Skipping static file serving.")
 
 # Include API routes
 app.include_router(chat.router, prefix="/api/v1", tags=["chat"])
