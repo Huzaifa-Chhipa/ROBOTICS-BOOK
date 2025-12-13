@@ -4,33 +4,111 @@ and missing function_tool from agents package.
 This module should be imported before any modules that use tf.contrib.distributions or function_tool.
 """
 import sys
-import tensorflow as tf
 
-# Check if tensorflow-probability is available
+# Handle TensorFlow import with graceful fallback
 try:
-    import tensorflow_probability as tfp
+    import tensorflow as tf
 
-    # Create a compatibility layer for tf.contrib.distributions
-    if not hasattr(tf, 'contrib'):
-        class ContribModule:
-            pass
-        tf.contrib = ContribModule()
+    # Check if tensorflow-probability is available
+    try:
+        import tensorflow_probability as tfp
 
-    if not hasattr(tf.contrib, 'distributions'):
-        tf.contrib.distributions = tfp.distributions
+        # Create a compatibility layer for tf.contrib.distributions
+        if not hasattr(tf, 'contrib'):
+            class ContribModule:
+                pass
+            tf.contrib = ContribModule()
+
+        if not hasattr(tf.contrib, 'distributions'):
+            tf.contrib.distributions = tfp.distributions
+
+    except ImportError as e:
+        # If tensorflow-probability is not available, create a more complete mock
+        # This is a fallback that at least provides the basic structure
+        import warnings
+        warnings.warn(f"tensorflow-probability not found, using compatibility mock: {e}")
+
+        if not hasattr(tf, 'contrib'):
+            class ContribModule:
+                pass
+            tf.contrib = ContribModule()
+
+        # Create a more complete mock for distributions that provides common classes and functions
+        class MockDistributions:
+            # Common distribution classes that might be needed
+            class Distribution:
+                pass
+
+            class Normal:
+                pass
+
+            class MultivariateNormalDiag:  # This was the missing attribute
+                pass
+
+            class CustomKLDiagNormal:  # This seems to be needed based on the error
+                pass
+
+            class Bernoulli:
+                pass
+
+            class Categorical:
+                pass
+
+            class Beta:
+                pass
+
+            class Dirichlet:
+                pass
+
+            class Exponential:
+                pass
+
+            class Gamma:
+                pass
+
+            class Laplace:
+                pass
+
+            class StudentT:
+                pass
+
+            class Uniform:
+                pass
+
+            # Add required functions like RegisterKL
+            @staticmethod
+            def RegisterKL(dist1, dist2):
+                # Mock implementation for RegisterKL function
+                def decorator(func):
+                    return func
+                return decorator
+
+            # Add other potentially needed functions
+            @staticmethod
+            def kl_divergence(dist1, dist2):
+                # Mock implementation
+                pass
+
+        tf.contrib.distributions = MockDistributions
 
 except ImportError as e:
-    # If tensorflow-probability is not available, create a more complete mock
-    # This is a fallback that at least provides the basic structure
+    # If tensorflow itself is not available (e.g., DLL issues on Windows), create a minimal mock
     import warnings
-    warnings.warn(f"tensorflow-probability not found, using compatibility mock: {e}")
+    warnings.warn(f"TensorFlow not available, using compatibility mock: {e}")
 
-    if not hasattr(tf, 'contrib'):
-        class ContribModule:
-            pass
-        tf.contrib = ContribModule()
+    # Create a mock tf module to prevent import errors
+    class MockTF:
+        pass
 
-    # Create a more complete mock for distributions that provides common classes and functions
+    tf = MockTF()
+
+    # Create a mock contrib module
+    class ContribModule:
+        pass
+
+    tf.contrib = ContribModule()
+
+    # Create a mock distributions module
     class MockDistributions:
         # Common distribution classes that might be needed
         class Distribution:
@@ -42,7 +120,7 @@ except ImportError as e:
         class MultivariateNormalDiag:  # This was the missing attribute
             pass
 
-        class CustomKLDiagNormal:  # This seems to be needed based on the error
+        class CustomKLDiagNormal:
             pass
 
         class Bernoulli:

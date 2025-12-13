@@ -124,9 +124,29 @@ async def process_with_agent(user_input: str, retrieved_passages: List[str]) -> 
         The agent's response to the user's question
     """
     if not AGENT_AVAILABLE:
-        # If agents are not available, return a simple response based on retrieved passages
+        # If agents are not available, try to create a synthesized response based on the retrieved passages
         if retrieved_passages:
-            return "Based on the book content:\n\n" + "\n\n".join(retrieved_passages[:2])  # Limit to first 2 passages
+            # Try to find relevant content in the passages that answers the user's question
+            user_question_lower = user_input.lower()
+            relevant_content = []
+
+            # Look for passages that might contain relevant information to the question
+            for passage in retrieved_passages:
+                passage_lower = passage.lower()
+                # Simple keyword matching to find most relevant passages
+                if any(keyword in passage_lower for keyword in user_question_lower.split()[:5]):  # Check first 5 words of question
+                    relevant_content.append(passage)
+
+            # If we found relevant content, create a response based on it
+            if relevant_content:
+                response = f"Regarding your question about '{user_input}', here's what the book says:\n\n"
+                response += "\n\n".join(relevant_content[:2])  # Limit to 2 most relevant passages
+            else:
+                # If no specific relevance found, return the first few passages
+                response = f"Here's information from the book related to your query:\n\n"
+                response += "\n\n".join(retrieved_passages[:2])
+
+            return response
         else:
             return "No supporting text found in the book."
 

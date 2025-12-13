@@ -45,8 +45,13 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      // Call the backend API
-      const response = await fetch('http://localhost:8000/api/v1/', {
+      // Determine the API URL based on environment
+      // If running on localhost, connect to backend at port 8000
+      const isLocalhost = typeof window !== 'undefined' &&
+        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+      const apiUrl = isLocalhost ? 'http://localhost:8000/api/v1/' : '/api/v1/';
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,10 +60,16 @@ const Chatbot = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const data = await response.json();
+
+      // Validate that we received a proper response
+      if (!data || !data.answer) {
+        throw new Error('Invalid response format from server');
+      }
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -70,9 +81,27 @@ const Chatbot = () => {
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error('Error sending message:', error);
+
+      let errorMessageText = 'Sorry, I encountered an error. Please try again.';
+
+      // Provide more specific error messages based on the error type
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        errorMessageText = 'Unable to connect to the chatbot service. Please make sure the backend server is running.';
+      } else if (error instanceof Error) {
+        if (error.message.includes('404')) {
+          errorMessageText = 'Chatbot API endpoint not found. Please check if the backend is properly configured.';
+        } else if (error.message.includes('500')) {
+          errorMessageText = 'The chatbot service encountered an internal error. Please try again later.';
+        } else if (error.message.includes('401') || error.message.includes('403')) {
+          errorMessageText = 'Access denied. Please check if the API keys are properly configured.';
+        } else {
+          errorMessageText = `Error: ${error.message}`;
+        }
+      }
+
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Sorry, I encountered an error. Please try again.',
+        text: errorMessageText,
         isUser: false,
         timestamp: new Date()
       };

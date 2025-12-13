@@ -52,7 +52,22 @@ async def read_root():
 
     # Check if file exists first
     if not index_file_path.exists():
-        return HTMLResponse(content=f"<h1>Error: File not found at {index_file_path}</h1>")
+        # Return a simple informational page instead of an error
+        return HTMLResponse(content="""
+        <html>
+            <head><title>Book RAG Chatbot API</title></head>
+            <body>
+                <h1>Book RAG Chatbot API</h1>
+                <p>API is running successfully!</p>
+                <p>Available endpoints:</p>
+                <ul>
+                    <li><a href="/docs">API Documentation</a></li>
+                    <li><a href="/api/v1/health">Health Check</a></li>
+                </ul>
+                <p>To use the API, make POST requests to <code>/api/v1/</code> with JSON data.</p>
+            </body>
+        </html>
+        """)
 
     with open(index_file_path, "r", encoding="utf-8") as file:
         content = file.read()

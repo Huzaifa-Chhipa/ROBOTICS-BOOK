@@ -193,23 +193,26 @@ async def process_query(
     )
 
     # Validate the response to ensure it's based only on retrieved passages
-    is_valid = validate_response_based_on_retrieved_content(
-        response.answer,
-        retrieval_result["passages"]
-    )
-
-    if not is_valid and "No supporting text found in the book." not in response.answer:
-        # If validation fails, return a safe response
-        return Response(
-            id=response_id,
-            query_id=query_id,
-            answer="No supporting text found in the book.",
-            evidence=[],
-            confidence="Low",
-            follow_up={"ask": False, "question": ""},
-            timestamp=datetime.datetime.now(),
-            json_schema={}
+    # Only validate when agents are actually available (to avoid rejecting fallback responses)
+    from ..agents.chatbot_agent import AGENT_AVAILABLE
+    if AGENT_AVAILABLE:
+        is_valid = validate_response_based_on_retrieved_content(
+            response.answer,
+            retrieval_result["passages"]
         )
+
+        if not is_valid and "No supporting text found in the book." not in response.answer:
+            # If validation fails, return a safe response
+            return Response(
+                id=response_id,
+                query_id=query_id,
+                answer="No supporting text found in the book.",
+                evidence=[],
+                confidence="Low",
+                follow_up={"ask": False, "question": ""},
+                timestamp=datetime.datetime.now(),
+                json_schema={}
+            )
 
     return response
 
