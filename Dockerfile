@@ -1,8 +1,9 @@
+# Use TensorFlow 1.15 preinstalled image
 FROM tensorflow/tensorflow:1.15.5-py3
 
 WORKDIR /app
 
-# System dependencies
+# Install system dependencies for Python packages
 RUN apt-get update && apt-get install -y \
     build-essential \
     libfreetype6-dev \
@@ -14,17 +15,22 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip first
+# Upgrade pip
 RUN python3 -m pip install --upgrade pip
 
-# Copy requirements & install
+# Copy requirements (without openai for now)
 COPY requirements.txt .
+
+# Optional: Comment out or remove openai line in requirements.txt
+RUN sed -i '/openai/d' requirements.txt
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend code
 COPY backend ./backend
 
-# PYTHONPATH for module imports
+# Set Python path for imports
 ENV PYTHONPATH=/app
 
 # Start FastAPI app
