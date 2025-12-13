@@ -69,17 +69,10 @@ const config: Config = {
     navbar: {
       title: 'Physical AI & Humanoid Robotics',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/robotics_logo.svg',
+        alt: 'Artificial Intelligence Logo',
+        src: 'img/artificial-intelligence.png',
       },
       items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'defaultSidebar',
-          position: 'left',
-          label: 'Get Started',
-        },
-
         {
           type: 'search',
           position: 'right',

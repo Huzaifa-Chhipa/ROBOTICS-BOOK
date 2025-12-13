@@ -5,14 +5,14 @@ import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  img: string;
   description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
     title: 'Comprehensive Curriculum',
-    Svg: require('@site/static/img/robotics_logo.svg').default,
+    img: 'img/website-search-bar.png',
     description: (
       <>
         From the fundamentals of kinematics and dynamics to advanced topics in
@@ -22,7 +22,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Hands-On Learning',
-    Svg: require('@site/static/img/robotics_logo.svg').default,
+    img: 'img/sensory.png',
     description: (
       <>
         Reinforce your understanding with practical examples, coding exercises,
@@ -32,7 +32,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'For Students & Practitioners',
-    Svg: require('@site/static/img/robotics_logo.svg').default,
+    img: 'img/reading.png',
     description: (
       <>
         Whether you're a student just starting out or a seasoned professional,
@@ -42,11 +42,11 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, img, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <img src={img} className={styles.featureSvg} role="img" alt={title} />
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>

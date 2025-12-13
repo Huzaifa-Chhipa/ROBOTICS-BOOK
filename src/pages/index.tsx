@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
+import Chatbot from '@site/src/components/Chatbot';
 
 import styles from './index.module.css';
 
@@ -21,12 +22,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro"> {/* Link to the book's introduction */}
-            Start Reading
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/module-1-foundations/week-1-ai-fundamentals/chapter-01-intro"> {/* Link to the first chapter of the first module */}
+            to="/docs/intro"> {/* Link to the first week of the first module */}
             Explore Modules
           </Link>
         </div>
@@ -120,6 +116,7 @@ export default function Home(): ReactNode {
         <HomepageFeatures />
         {/* Potentially add more sections here */}
       </main>
+      <Chatbot />
     </Layout>
   );
 }
