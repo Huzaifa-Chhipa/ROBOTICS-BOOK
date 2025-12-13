@@ -1,19 +1,33 @@
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements first to leverage Docker cache
+# System dependencies for building packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    curl \
+    wget \
+    pkg-config \
+    libfreetype6-dev \
+    libhdf5-dev \
+    libzmq3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN python3 -m pip install --upgrade pip
+
+# Copy requirements
 COPY requirements.txt .
 
-# Install dependencies
+# Install Python packages (latest TF2.x + openai + cohere)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
-COPY . .
+# Copy backend code
+COPY backend ./backend
 
-# Set PYTHONPATH to include backend
+# Set PYTHONPATH
 ENV PYTHONPATH=/app
 
-# Run the application
-CMD ["uvicorn", "backend.src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start FastAPI app
+CMD ["sh", "-c", "uvicorn backend.src.main:app --host 0.0.0.0 --port $PORT"]
