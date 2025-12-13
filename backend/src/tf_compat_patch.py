@@ -8,6 +8,7 @@ import tensorflow as tf
 # Check if tensorflow-probability is available
 try:
     import tensorflow_probability as tfp
+
     # Create a compatibility layer for tf.contrib.distributions
     if not hasattr(tf, 'contrib'):
         class ContribModule:
@@ -16,16 +17,58 @@ try:
 
     if not hasattr(tf.contrib, 'distributions'):
         tf.contrib.distributions = tfp.distributions
-except ImportError:
-    # If tensorflow-probability is not available, try alternative approach
-    # This is a fallback for cases where tfp is not available
+
+except ImportError as e:
+    # If tensorflow-probability is not available, create a more complete mock
+    # This is a fallback that at least provides the basic structure
+    import warnings
+    warnings.warn(f"tensorflow-probability not found, using compatibility mock: {e}")
+
     if not hasattr(tf, 'contrib'):
         class ContribModule:
             pass
         tf.contrib = ContribModule()
 
-    # Create a mock for distributions if needed
-    if not hasattr(tf.contrib, 'distributions'):
-        class MockDistributions:
+    # Create a more complete mock for distributions that provides common classes
+    class MockDistributions:
+        # Common distribution classes that might be needed
+        class Distribution:
             pass
-        tf.contrib.distributions = MockDistributions()
+
+        class Normal:
+            pass
+
+        class MultivariateNormalDiag:  # This was the missing attribute
+            pass
+
+        class Bernoulli:
+            pass
+
+        class Categorical:
+            pass
+
+        class Beta:
+            pass
+
+        class Dirichlet:
+            pass
+
+        class Exponential:
+            pass
+
+        class Gamma:
+            pass
+
+        class Laplace:
+            pass
+
+        class StudentT:
+            pass
+
+        class Uniform:
+            pass
+
+        # Add any other common distribution classes as needed
+        pass
+
+    tf.contrib.distributions = MockDistributions
