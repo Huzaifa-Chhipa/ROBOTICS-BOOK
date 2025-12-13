@@ -1,8 +1,8 @@
-FROM tensorflow/tensorflow:1.15.5-py3  # TF1.15 preinstalled
+FROM tensorflow/tensorflow:1.15.5-py3
 
 WORKDIR /app
 
-# Install OS dependencies needed for Python packages
+# Install system dependencies required for some Python packages
 RUN apt-get update && apt-get install -y \
     build-essential \
     libfreetype6-dev \
