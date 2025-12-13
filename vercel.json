@@ -31,5 +31,6 @@
         "cache-control": "public, max-age=0"
       }
     }
-  ]
+  ],
+  "outputDirectory": "build"
 }
