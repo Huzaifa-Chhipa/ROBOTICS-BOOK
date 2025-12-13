@@ -1,0 +1,116 @@
+"""
+Chatbot agent for the Book RAG Chatbot using OpenAI Agent SDK with Gemini API.
+"""
+import asyncio
+from typing import List
+from agents import Agent, OpenAIChatCompletionsModel, AsyncOpenAI
+import agents
+from agents import set_tracing_disabled, function_tool
+import os
+from dotenv import load_dotenv
+from agents import enable_verbose_stdout_logging
+from src.config import GEMINI_API_KEY
+
+# Enable logging and setup
+enable_verbose_stdout_logging()
+load_dotenv()
+set_tracing_disabled(disabled=True)
+
+# Configure Gemini API provider using OpenAI-compatible endpoint
+provider = AsyncOpenAI(
+    api_key=GEMINI_API_KEY,
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+)
+
+# Configure the model to use Gemini
+model = OpenAIChatCompletionsModel(
+    model="gemini-2.0-flash",
+    openai_client=provider
+)
+
+def create_retrieve_tool(retrieved_passages: List[str]):
+    """
+    Create a retrieve tool that returns the pre-retrieved passages.
+    This allows the agent to work with the passages already retrieved by the RAG service.
+    """
+    @function_tool
+    def retrieve_tool(query: str) -> List[str]:
+        """
+        Tool for the agent to retrieve relevant passages from the vector database.
+        """
+        # Return the pre-retrieved passages that were passed to the agent
+        return retrieved_passages
+
+    return retrieve_tool
+
+def create_agent_with_passages(retrieved_passages: List[str]):
+    """
+    Create an agent with the specific retrieved passages available via the retrieve_tool.
+    """
+    # Create the retrieve tool with the specific passages
+    retrieve_tool = create_retrieve_tool(retrieved_passages)
+
+    # Create the agent with specific instructions that follow constitutional principles
+    agent = Agent(
+        name="Humanoid Robotics AI Tutor",
+        instructions="""
+You are an AI tutor for the Physical AI & Humanoid Robotics textbook.
+To answer the user question, first call the tool `retrieve_tool` with the user query.
+Use ONLY the returned content from `retrieve_tool` to answer.
+If the answer is not in the retrieved content, respond with exactly: "No supporting text found in the book."
+If the user provided specific selected text and the answer is not in that selected text, respond with exactly: "Answer not available in the selected text."
+Never invent facts or use external knowledge.
+Always cite the source of your information when possible.
+Keep answers concise, factual, and directly tied to retrieved passages.
+When quoting, keep quotes short and exact (≤200 characters).
+""",
+        model=model,
+        tools=[retrieve_tool]
+    )
+
+    return agent
+
+async def process_with_agent(user_input: str, retrieved_passages: List[str]) -> str:
+    """
+    Process user input with the agent using retrieved passages.
+
+    Args:
+        user_input: The user's question
+        retrieved_passages: List of passages retrieved from the vector database
+
+    Returns:
+        The agent's response to the user's question
+    """
+    try:
+        # Create an agent with the specific retrieved passages
+        agent = create_agent_with_passages(retrieved_passages)
+
+        # If no passages were retrieved, return the appropriate response
+        if not retrieved_passages:
+            return "No supporting text found in the book."
+
+        # Create AgentRunner and run the agent with the user's question
+        # The agent will call the retrieve_tool internally to get the passages
+        agent_runner = agents.run.AgentRunner()
+        result = await agent_runner.run(
+            starting_agent=agent,
+            input=user_input
+        )
+
+        # Extract the response content
+        if result and hasattr(result, 'messages') and result.messages:
+            response_content = result.messages[-1].content
+            return response_content
+        else:
+            # Fallback if the agent didn't produce a proper response
+            response_text = f"Based on the retrieved information: {' '.join(retrieved_passages)}"
+            return response_text
+
+    except Exception as e:
+        print(f"Error processing with agent: {e}")
+        # Fallback: return the retrieved passages directly when agent fails
+        if retrieved_passages:
+            fallback_response = "Based on the book content:\n\n" + "\n\n".join(retrieved_passages)
+            return fallback_response
+        else:
+            return "No supporting text found in the book."

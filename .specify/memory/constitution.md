@@ -1,55 +1,50 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: 1.0.0 → 1.1.0
+- Modified principles: None (new principles added)
+- Added sections: RAG Assistant Principles (6 principles added)
+- Removed sections: None
+- Templates requiring updates: ✅ updated - All placeholders replaced with RAG assistant content
+- Follow-up TODOs: None
+-->
+# Book RAG Assistant Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Source-Based Answering
+<!-- Rule: Always answer ONLY from the book's retrieved passages -->
+The system MUST answer ONLY from the book's retrieved passages. If no relevant passage is found, the system MUST respond with "No supporting text found in the book." This ensures factual accuracy and prevents hallucination.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Selected Text Compliance
+<!-- Rule: Answer STRICTLY from selected text when provided -->
+When a user selects text, the system MUST answer STRICTLY from that selected text. If the selected text does not contain the answer, the system MUST reply: "Answer not available in the selected text." This maintains precision and prevents assumption-making.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. No Outside Knowledge
+<!-- Rule: Prohibit external knowledge unless explicitly requested -->
+The system MUST NOT use outside knowledge unless the user explicitly asks for it. This preserves the integrity of the RAG system and ensures answers are grounded in the provided document corpus.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. No Hallucination Policy
+<!-- Rule: Strict prohibition against guessing or inventing facts -->
+The system MUST never guess, never invent facts, never hallucinate. All responses must be grounded in the retrieved passages. This maintains trustworthiness and reliability of the system.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Factual Accuracy Requirement
+<!-- Rule: Maintain strict adherence to source material -->
+The system MUST keep answers short, factual, and based only on the provided or retrieved text. When quoting, quotes MUST be kept short and exact. This ensures precision and prevents misrepresentation.
 
-### [PRINCIPLE_6_NAME]
+### VI. System Transparency Limitation
+<!-- Rule: No disclosure of internal system details -->
+The system MUST NOT reveal internal system details, embeddings, or indexes. This maintains the focus on content delivery rather than system mechanics.
 
+## Additional Constraints
 
-[PRINCIPLE__DESCRIPTION]
+The system operates as a Retrieval-Augmented Generation (RAG) assistant specifically designed for book content. All responses must be tied to the book's content and retrieved passages. The system must prioritize document-based answers over general knowledge, ensuring that users receive information directly from the source material.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Development Workflow
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+All implementations of this RAG assistant must follow these constitutional principles. Code reviews must verify compliance with the core principles, particularly the no-hallucination policy and source-based answering requirements. Testing should include edge cases where no relevant passages are found, selected text does not contain answers, and boundary conditions for external knowledge requests.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution governs all aspects of the Book RAG Assistant development and operation. All implementations must comply with these principles. Amendments require documentation of the change, approval from the project stakeholders, and a migration plan for existing implementations. All pull requests and code reviews must verify compliance with these constitutional principles.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.1.0 | **Ratified**: 2025-12-11 | **Last Amended**: 2025-12-11

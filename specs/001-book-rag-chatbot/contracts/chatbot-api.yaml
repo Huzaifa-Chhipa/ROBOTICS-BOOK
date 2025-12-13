@@ -1,0 +1,161 @@
+# API Contract: Book RAG Chatbot
+
+## Overview
+This document defines the API contract for the Book RAG Chatbot service, specifying endpoints, request/response formats, and error handling.
+
+## Base URL
+```
+https://api.book-rag-chatbot.com/v1
+```
+For local development: `http://localhost:8000/api/v1`
+
+## Authentication
+All requests require a valid API key in the header:
+```
+Authorization: Bearer {your-api-key}
+```
+
+## Endpoints
+
+### POST /query
+Submit a question about the book content and receive an answer based on retrieved passages.
+
+#### Request
+```json
+{
+  "query": "string, required - The user's question about the book content",
+  "selected_chunks": ["string"], "optional - Restrict search to specific chunk IDs"
+}
+```
+
+#### Response
+**Success (200 OK)**
+```json
+{
+  "answer": "string - The answer to the user's question",
+  "evidence": [
+    {
+      "doc_id": "string - Document identifier where information was found",
+      "chunk_id": "string - Chunk identifier within the document",
+      "quote": "string - Verbatim quote or excerpt (≤200 characters)"
+    }
+  ],
+  "confidence": "enum - High|Medium|Low confidence level",
+  "follow_up": {
+    "ask": "boolean - Whether to suggest a follow-up question",
+    "question": "string - The suggested follow-up question (if ask is true)"
+  }
+}
+```
+
+**Example Success Response**
+```json
+{
+  "answer": "The main concept discussed in the book is the application of RAG systems to book content.",
+  "evidence": [
+    {
+      "doc_id": "doc_12345",
+      "chunk_id": "chunk_67890",
+      "quote": "The primary focus of this book is to demonstrate how RAG systems can enhance access to book content."
+    }
+  ],
+  "confidence": "High",
+  "follow_up": {
+    "ask": true,
+    "question": "Would you like to know more about how RAG systems work?"
+  }
+}
+```
+
+#### Error Responses
+**Bad Request (400)**
+```json
+{
+  "error": "string - Error message explaining the issue",
+  "code": "string - Error code for programmatic handling"
+}
+```
+
+**Not Found (404)**
+```json
+{
+  "answer": "No supporting text found in the book.",
+  "evidence": [],
+  "confidence": "Low",
+  "follow_up": {
+    "ask": false,
+    "question": ""
+  }
+}
+```
+
+### POST /ingest
+Ingest book content from a sitemap.xml into the vector database.
+
+#### Request
+```json
+{
+  "sitemap_url": "string, required - URL to the sitemap.xml file",
+  "book_title": "string, required - Title of the book being ingested"
+}
+```
+
+#### Response
+**Success (200 OK)**
+```json
+{
+  "status": "string - Status of the ingestion process",
+  "chunks_processed": "integer - Number of content chunks successfully processed",
+  "total_content_size": "integer - Total size of content ingested in characters"
+}
+```
+
+### GET /health
+Check the health status of the service.
+
+#### Response
+**Success (200 OK)**
+```json
+{
+  "status": "string - Health status (e.g., 'healthy')",
+  "timestamp": "string - ISO 8601 timestamp of the check",
+  "dependencies": {
+    "qdrant": "string - Status of Qdrant connection",
+    "openai": "string - Status of OpenAI API connection"
+  }
+}
+```
+
+## Data Types
+
+### Confidence Level
+Enum with possible values:
+- `"High"` - Strong match between query and retrieved content
+- `"Medium"` - Moderate match, answer may have some uncertainty
+- `"Low"` - Weak match, answer should be treated with caution
+
+### Evidence Object
+- `doc_id`: Unique identifier for the source document
+- `chunk_id`: Unique identifier for the specific content chunk
+- `quote`: A verbatim excerpt from the source (limited to ≤200 characters)
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| `INVALID_QUERY` | The query parameter is missing or invalid |
+| `NO_CONTENT_FOUND` | No relevant content found in the book for the query |
+| `INVALID_CHUNKS` | Provided chunk IDs do not exist in the database |
+| `INTERNAL_ERROR` | An unexpected error occurred during processing |
+| `SERVICE_UNAVAILABLE` | Downstream service (Qdrant or OpenAI) is unavailable |
+
+## Rate Limiting
+- Default: 100 requests per minute per API key
+- Exceeding the limit returns a 429 status code
+
+## Content Restrictions
+- All answers must be based solely on retrieved book content
+- No external knowledge or pretraining memory may be used
+- Responses must include proper citations when content is found
+- If no relevant content is found, return the exact string: "No supporting text found in the book."
+- If restricted to selected text with no answer, return: "Answer not available in the selected text."
