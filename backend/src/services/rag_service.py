@@ -4,6 +4,8 @@ Implements query interpretation and retrieval strategy.
 """
 from typing import List, Dict, Any, Optional
 import asyncio
+# Import compatibility patch before importing agents
+from ..tf_compat_patch import *
 from agents import function_tool
 from ..models.query import UserQuery
 from ..models.retrieved_passages import RetrievedPassages, RetrievedPassage

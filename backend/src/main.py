@@ -1,6 +1,9 @@
 """
 Main FastAPI application entry point for the Book RAG Chatbot.
 """
+# Import TensorFlow compatibility patch first to handle deprecated tf.contrib.distributions
+from .tf_compat_patch import *
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse

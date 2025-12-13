@@ -1,6 +1,8 @@
 """
 OpenAI service for the Book RAG Chatbot using Gemini API.
 """
+# Import compatibility patch before importing agents
+from ..tf_compat_patch import *
 from agents import Agent, Runner, OpenAIChatCompletionsModel, AsyncOpenAI
 from agents import set_tracing_disabled
 import os
