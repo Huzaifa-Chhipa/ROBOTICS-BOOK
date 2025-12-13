@@ -187,7 +187,8 @@
       "Bash(git commit -m \"$(cat <<''EOF''\nAdd modern chatbot UI with RAG functionality for robotics book\n\n- Created modern chatbot UI with gradient design\n- Integrated chatbot with backend RAG system\n- Added robot.png as chatbot icon on homepage and all module sections\n- Updated artificial intelligence PNG in header\n- Replaced icons in feature sections with website-search-bar.png, sensory.png, and reading.png\n- Implemented backend API with Qdrant vector database integration\n- Added proper error handling and typing indicators\n- Created custom layouts to display chatbot on all documentation pages\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git push origin 001-book-rag-chatbot)",
       "Bash(git commit -m \"Update Claude settings\")",
-      "Bash(git add .claude/settings.local.json)"
+      "Bash(git add .claude/settings.local.json)",
+      "Bash(git commit -m \"Update settings\")"
     ],
     "deny": [],
     "ask": []
