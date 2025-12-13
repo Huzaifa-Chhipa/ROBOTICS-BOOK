@@ -5,9 +5,7 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "prebuild": "rimraf dist build",
-    "build": "docusaurus build && ncp build dist",
-    "postbuild": "echo 'Build completed successfully'",
+    "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
