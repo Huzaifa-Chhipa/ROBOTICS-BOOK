@@ -2,6 +2,10 @@
   "version": 2,
   "name": "robotics-book",
   "public": true,
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "installCommand": "npm install",
+  "framework": "docusaurus",
   "builds": [
     {
       "src": "package.json",
@@ -31,6 +35,5 @@
         "cache-control": "public, max-age=0"
       }
     }
-  ],
-  "outputDirectory": "build"
+  ]
 }
