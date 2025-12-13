@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "framework": "docusaurus",
   "builds": [
     {
       "src": "package.json",
