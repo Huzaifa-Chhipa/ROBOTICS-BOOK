@@ -14,15 +14,18 @@ except ImportError as e:
     # Handle missing functions with mocks
     print(f"Warning: agents package import issue: {e}")
 
-    # Mock the missing functions
-    def Agent(*args, **kwargs):
-        raise NotImplementedError("Agent not available - need to install correct agents package")
+    # Define placeholder classes that will raise errors only when instantiated/called
+    class Agent:
+        def __init__(self, *args, **kwargs):
+            raise NotImplementedError("Agent not available - need to install correct agents package")
 
-    def OpenAIChatCompletionsModel(*args, **kwargs):
-        raise NotImplementedError("OpenAIChatCompletionsModel not available")
+    class OpenAIChatCompletionsModel:
+        def __init__(self, *args, **kwargs):
+            raise NotImplementedError("OpenAIChatCompletionsModel not available")
 
-    def AsyncOpenAI(*args, **kwargs):
-        raise NotImplementedError("AsyncOpenAI not available")
+    class AsyncOpenAI:
+        def __init__(self, *args, **kwargs):
+            raise NotImplementedError("AsyncOpenAI not available")
 
     def set_tracing_disabled(**kwargs):
         pass
@@ -45,16 +48,24 @@ load_dotenv()
 set_tracing_disabled(disabled=True)
 
 # Configure Gemini API provider using OpenAI-compatible endpoint
-provider = AsyncOpenAI(
-    api_key=GEMINI_API_KEY,
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-)
+try:
+    provider = AsyncOpenAI(
+        api_key=GEMINI_API_KEY,
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+    )
 
-# Configure the model to use Gemini
-model = OpenAIChatCompletionsModel(
-    model="gemini-2.0-flash",
-    openai_client=provider
-)
+    # Configure the model to use Gemini
+    model = OpenAIChatCompletionsModel(
+        model="gemini-2.0-flash",
+        openai_client=provider
+    )
+
+    AGENT_AVAILABLE = True
+except (NotImplementedError, NameError):
+    # Agents not available, set a flag
+    AGENT_AVAILABLE = False
+    provider = None
+    model = None
 
 def create_retrieve_tool(retrieved_passages: List[str]):
     """
@@ -75,6 +86,9 @@ def create_agent_with_passages(retrieved_passages: List[str]):
     """
     Create an agent with the specific retrieved passages available via the retrieve_tool.
     """
+    if not AGENT_AVAILABLE:
+        raise NotImplementedError("Agents not available - cannot create agent")
+
     # Create the retrieve tool with the specific passages
     retrieve_tool = create_retrieve_tool(retrieved_passages)
 
@@ -109,6 +123,13 @@ async def process_with_agent(user_input: str, retrieved_passages: List[str]) -> 
     Returns:
         The agent's response to the user's question
     """
+    if not AGENT_AVAILABLE:
+        # If agents are not available, return a simple response based on retrieved passages
+        if retrieved_passages:
+            return "Based on the book content:\n\n" + "\n\n".join(retrieved_passages[:2])  # Limit to first 2 passages
+        else:
+            return "No supporting text found in the book."
+
     try:
         # Create an agent with the specific retrieved passages
         agent = create_agent_with_passages(retrieved_passages)
