@@ -37,7 +37,7 @@ except ImportError as e:
 
 import os
 from dotenv import load_dotenv
-from src.config import GEMINI_API_KEY
+from ..config import GEMINI_API_KEY
 
 # Enable logging and setup
 enable_verbose_stdout_logging()

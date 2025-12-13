@@ -28,7 +28,7 @@ except ImportError as e:
         pass
 
 import os
-from src.config import GEMINI_API_KEY
+from ..config import GEMINI_API_KEY
 
 # Configure Gemini API provider using OpenAI-compatible endpoint
 try:

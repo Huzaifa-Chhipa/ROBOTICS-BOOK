@@ -5,7 +5,7 @@ Optimized for free-tier usage by batching requests.
 
 import cohere
 from typing import List
-from src.config import COHERE_API_KEY, COHERE_EMBED_MODEL
+from ..config import COHERE_API_KEY, COHERE_EMBED_MODEL
 
 # Initialize Cohere client
 cohere_client = cohere.Client(COHERE_API_KEY)

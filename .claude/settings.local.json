@@ -192,7 +192,8 @@
       "Bash(git checkout 001-book-rag-chatbot)",
       "Bash(git merge 001-book-rag-chatbot)",
       "Bash(git commit -m \"Fix TensorFlow compatibility patch to include required distribution classes\n\n- Added MultivariateNormalDiag and other common distribution classes to the mock\n- This resolves the AttributeError: ''MockDistributions'' object has no attribute ''MultivariateNormalDiag''\n- The compatibility patch now provides the basic structure needed by the agents package\")",
-      "Bash(git commit -m \"Enhance TensorFlow compatibility patch with RegisterKL function\n\n- Added RegisterKL function to MockDistributions to handle @tfd.RegisterKL decorator\n- Added CustomKLDiagNormal class that seems to be referenced in the error\n- Added kl_divergence function as it might also be needed\n- This resolves the AttributeError: type object ''MockDistributions'' has no attribute ''RegisterKL''\")"
+      "Bash(git commit -m \"Enhance TensorFlow compatibility patch with RegisterKL function\n\n- Added RegisterKL function to MockDistributions to handle @tfd.RegisterKL decorator\n- Added CustomKLDiagNormal class that seems to be referenced in the error\n- Added kl_divergence function as it might also be needed\n- This resolves the AttributeError: type object ''MockDistributions'' has no attribute ''RegisterKL''\")",
+      "Bash(git commit -m \"Fix agents package import issues with fallback implementations\n\n- Added fallback imports for missing function_tool and other agents functions\n- Created mock implementations when agents package doesn''t have expected API\n- Updated rag_service.py, chatbot_agent.py, and openai_service.py to handle missing imports gracefully\n- This resolves the ImportError: cannot import name ''function_tool'' from ''agents''\")"
     ],
     "deny": [],
     "ask": []

@@ -2,7 +2,7 @@
 Qdrant collection setup utility for the Book RAG Chatbot.
 """
 from qdrant_client import QdrantClient, models
-from src.config import QDRANT_URL, QDRANT_API_KEY, QDRANT_COLLECTION_NAME
+from ..config import QDRANT_URL, QDRANT_API_KEY, QDRANT_COLLECTION_NAME
 
 def create_collection():
     """
