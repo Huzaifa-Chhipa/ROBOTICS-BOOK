@@ -188,7 +188,20 @@
       "Bash(git push origin 001-book-rag-chatbot)",
       "Bash(git commit -m \"Update Claude settings\")",
       "Bash(git add .claude/settings.local.json)",
-      "Bash(git commit -m \"Update settings\")"
+      "Bash(git commit -m \"Update settings\")",
+      "Bash(python -m uvicorn src.main:app --reload --host 0.0.0.0 --port 8000)",
+      "Bash(python -c \"from src.main import app; print(''Import successful'')\")",
+      "Bash(python -c \"import uvicorn; from src.main import app; uvicorn.run(app, host=''0.0.0.0'', port=8000)\")",
+      "Bash(python -c \"import uvicorn; from src.main import app; uvicorn.run(app, host=''0.0.0.0'', port=8001)\")",
+      "Bash(curl -s http://localhost:8001/docs)",
+      "Bash(curl -s http://localhost:8001/api/v1/health)",
+      "Bash(cat /tmp/claude/tasks/ba8cd40.output)",
+      "Bash(python -m uvicorn src.main:app --host 0.0.0.0 --port 8001 --reload)",
+      "Bash(cat /tmp/claude/tasks/bfb5167.output)",
+      "Bash(python -m uvicorn src.main:app --host 0.0.0.0 --port 8001)",
+      "Bash(curl -s http://localhost:8001/openapi.json)",
+      "Bash(curl -s -X OPTIONS http://localhost:8001/api/v1/)",
+      "Bash(curl -s -X POST http://localhost:8001/api/v1/ -H \"Content-Type: application/json\" -d '{\"\"query\"\": \"\"test\"\"}')"
     ],
     "deny": [],
     "ask": []
