@@ -201,7 +201,10 @@
       "Bash(python -m uvicorn src.main:app --host 0.0.0.0 --port 8001)",
       "Bash(curl -s http://localhost:8001/openapi.json)",
       "Bash(curl -s -X OPTIONS http://localhost:8001/api/v1/)",
-      "Bash(curl -s -X POST http://localhost:8001/api/v1/ -H \"Content-Type: application/json\" -d '{\"\"query\"\": \"\"test\"\"}')"
+      "Bash(curl -s -X POST http://localhost:8001/api/v1/ -H \"Content-Type: application/json\" -d '{\"\"query\"\": \"\"test\"\"}')",
+      "Bash(git commit -m \"$(cat <<''EOF''\nFix TensorFlow compatibility issue for Railway deployment\n\n- Created TensorFlow compatibility patch to handle deprecated tf.contrib.distributions import\n- Added tf_compat_patch.py to provide compatibility layer for agents package\n- Updated main.py, rag_service.py, and openai_service.py to import patch before agents\n- Added tensorflow-probability to requirements.txt for distributions functionality\n- Fixed Dockerfile to use correct module path for backend application\n\nThis resolves the AttributeError: module ''tensorflow'' has no attribute ''contrib'' error in Railway deployment.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(gh pr create --title \"Fix TensorFlow compatibility issue for Railway deployment\" --body \"$(cat <<''EOF''\n## Summary\n- Created TensorFlow compatibility patch to handle deprecated `tf.contrib.distributions` import\n- Added `tf_compat_patch.py` to provide compatibility layer for agents package\n- Updated main.py, rag_service.py, and openai_service.py to import patch before agents\n- Added tensorflow-probability to requirements.txt for distributions functionality\n- Fixed Dockerfile to use correct module path for backend application\n\nThis resolves the `AttributeError: module ''tensorflow'' has no attribute ''contrib''` error in Railway deployment.\n\n## Test plan\n- [ ] Verify that the TensorFlow compatibility patch works in Railway deployment\n- [ ] Confirm that the agents package imports successfully\n- [ ] Test that the RAG chatbot functionality remains intact\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\nEOF\n)\")",
+      "Bash(git stash pop)"
     ],
     "deny": [],
     "ask": []
