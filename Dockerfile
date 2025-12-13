@@ -1,6 +1,18 @@
-FROM tensorflow/tensorflow:1.15.5-py3
+FROM tensorflow/tensorflow:1.15.5-py3  # TF1.15 preinstalled
 
 WORKDIR /app
+
+# Install OS dependencies needed for Python packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libfreetype6-dev \
+    libhdf5-dev \
+    libzmq3-dev \
+    pkg-config \
+    git \
+    curl \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
