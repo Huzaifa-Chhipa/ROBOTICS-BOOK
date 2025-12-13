@@ -3,12 +3,40 @@ Chatbot agent for the Book RAG Chatbot using OpenAI Agent SDK with Gemini API.
 """
 import asyncio
 from typing import List
-from agents import Agent, OpenAIChatCompletionsModel, AsyncOpenAI
-import agents
-from agents import set_tracing_disabled, function_tool
+
+# Try to import from agents with fallbacks for missing functions
+try:
+    from agents import Agent, OpenAIChatCompletionsModel, AsyncOpenAI
+    import agents
+    from agents import set_tracing_disabled, function_tool
+    from agents import enable_verbose_stdout_logging
+except ImportError as e:
+    # Handle missing functions with mocks
+    print(f"Warning: agents package import issue: {e}")
+
+    # Mock the missing functions
+    def Agent(*args, **kwargs):
+        raise NotImplementedError("Agent not available - need to install correct agents package")
+
+    def OpenAIChatCompletionsModel(*args, **kwargs):
+        raise NotImplementedError("OpenAIChatCompletionsModel not available")
+
+    def AsyncOpenAI(*args, **kwargs):
+        raise NotImplementedError("AsyncOpenAI not available")
+
+    def set_tracing_disabled(**kwargs):
+        pass
+
+    def function_tool(func):
+        return func
+
+    def enable_verbose_stdout_logging():
+        pass
+
+    import agents
+
 import os
 from dotenv import load_dotenv
-from agents import enable_verbose_stdout_logging
 from src.config import GEMINI_API_KEY
 
 # Enable logging and setup

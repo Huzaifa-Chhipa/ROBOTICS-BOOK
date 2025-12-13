@@ -6,7 +6,15 @@ from typing import List, Dict, Any, Optional
 import asyncio
 # Import compatibility patch before importing agents
 from ..tf_compat_patch import *
-from agents import function_tool
+
+# Try to import function_tool from agents, with fallback if not available
+try:
+    from agents import function_tool
+except ImportError:
+    # If function_tool is not available from agents, create a mock decorator
+    def function_tool(func):
+        """Mock function_tool decorator for compatibility."""
+        return func
 from ..models.query import UserQuery
 from ..models.retrieved_passages import RetrievedPassages, RetrievedPassage
 from ..models.response import Response, Evidence

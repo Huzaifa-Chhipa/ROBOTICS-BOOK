@@ -1,6 +1,7 @@
 """
-TensorFlow compatibility patch to handle deprecated tf.contrib.distributions import.
-This module should be imported before any modules that use tf.contrib.distributions.
+TensorFlow and agents compatibility patch to handle deprecated tf.contrib.distributions import
+and missing function_tool from agents package.
+This module should be imported before any modules that use tf.contrib.distributions or function_tool.
 """
 import sys
 import tensorflow as tf
@@ -86,3 +87,15 @@ except ImportError as e:
             pass
 
     tf.contrib.distributions = MockDistributions
+
+# Now handle the missing function_tool from agents package
+# This might be needed if the agents package doesn't have the expected API
+def function_tool(func):
+    """
+    Mock function_tool decorator for compatibility if not available in the installed agents package.
+    """
+    # Return the function as-is, since we're providing a compatibility layer
+    return func
+
+# Add this to the global namespace so it can be imported
+sys.modules[__name__] = sys.modules[__name__]  # Ensure the module is properly referenced
