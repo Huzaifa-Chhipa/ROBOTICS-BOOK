@@ -22,7 +22,7 @@ const config: Config = {
   trailingSlash: false,
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',  // This is still the correct way in Docusaurus v3, just with a deprecation warning
 
   i18n: {
     defaultLocale: 'en',

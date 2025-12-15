@@ -47,19 +47,23 @@ const Chatbot = () => {
     try {
       // Determine the API URL based on environment
       // If running on localhost, connect to backend at port 8000
-      // For production, you can set the backend URL via environment variable or use the same domain
+      // For production, connect to Hugging Face backend
       const isLocalhost = typeof window !== 'undefined' &&
         (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
 
       let apiUrl;
       if (isLocalhost) {
-        apiUrl = 'http://localhost:8000/api/v1/';
+        // For local development, connect to your backend running on port 7860
+        apiUrl = 'http://localhost:7860/api/v1/';
       } else {
-        // For production, you can either:
-        // 1. Use same domain if backend is served from same domain: '/api/v1/'
-        // 2. Use a specific backend URL from environment or configuration
-        apiUrl = process.env.REACT_APP_API_URL || '/api/v1/';
+        // Production: Use the Hugging Face backend URL
+        // Docusaurus processes environment variables at build time
+        // The REACT_APP_API_URL will be replaced with the actual value during build
+        apiUrl = process.env.REACT_APP_API_URL || 'https://huzaifachhipa-rag-chatbot.hf.space/api/v1/';
       }
+
+      console.log('Attempting to connect to:', apiUrl); // Debug log
+      console.log('Current hostname:', typeof window !== 'undefined' ? window.location.hostname : 'N/A'); // Debug log
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -68,6 +72,8 @@ const Chatbot = () => {
         },
         body: JSON.stringify({ query: inputValue })
       });
+
+      console.log('Response received:', response.status); // Debug log
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -95,8 +101,13 @@ const Chatbot = () => {
       let errorMessageText = 'Sorry, I encountered an error. Please try again.';
 
       // Provide more specific error messages based on the error type
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        errorMessageText = 'Unable to connect to the chatbot service. Please make sure the backend server is running.';
+      if (error instanceof TypeError) {
+        // This usually indicates a network error or CORS issue
+        if (error.message.includes('fetch')) {
+          errorMessageText = 'Network error: Unable to connect to the chatbot service. This could be due to CORS restrictions or the backend server being unavailable.';
+        } else {
+          errorMessageText = `Network error: ${error.message}`;
+        }
       } else if (error instanceof Error) {
         if (error.message.includes('404')) {
           errorMessageText = 'Chatbot API endpoint not found. Please check if the backend is properly configured.';
@@ -107,6 +118,8 @@ const Chatbot = () => {
         } else {
           errorMessageText = `Error: ${error.message}`;
         }
+      } else {
+        errorMessageText = 'An unknown error occurred. Please try again.';
       }
 
       const errorMessage: Message = {
