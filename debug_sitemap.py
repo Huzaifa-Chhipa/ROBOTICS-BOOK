@@ -30,5 +30,5 @@ def debug_sitemap(sitemap_url):
         raise
 
 if __name__ == "__main__":
-    SITEMAP_URL = "https://robotics-book-kohl.vercel.app/sitemap.xml"
+    SITEMAP_URL = "https://robotics-book-gamma.vercel.app/sitemap.xml"
     debug_sitemap(SITEMAP_URL)

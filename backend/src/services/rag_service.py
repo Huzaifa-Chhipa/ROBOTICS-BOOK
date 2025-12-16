@@ -23,7 +23,7 @@ from ..utils.validation_utils import (
     validate_response_based_on_retrieved_content,
     validate_chunk_ids_exist
 )
-from ..agents.chatbot_agent import process_with_agent
+from ..rag_agents.chatbot_agent import process_with_agent
 import uuid
 import datetime
 
@@ -42,7 +42,7 @@ def retrieve(query: str, selected_chunks: Optional[List[str]] = None) -> Dict[st
         # Call the Qdrant service to retrieve relevant passages
         result = query_points(
             query=query,
-            limit=5,
+            limit=10,  # Increase limit to get more potential relevant passages
             selected_chunks=selected_chunks
         )
 
@@ -156,7 +156,7 @@ async def process_query(
 
     # Create evidence objects from the retrieved passages with proper metadata
     evidence_list = []
-    for i, passage in enumerate(retrieval_result["passages"][:3]):  # Limit to first 3 passages
+    for i, passage in enumerate(retrieval_result["passages"][:5]):  # Increase to first 5 passages for more context
         # Extract document and chunk IDs from the raw points if available
         doc_id = "unknown"
         chunk_id = f"chunk_{i}"
@@ -194,7 +194,7 @@ async def process_query(
 
     # Validate the response to ensure it's based only on retrieved passages
     # Only validate when agents are actually available (to avoid rejecting fallback responses)
-    from ..agents.chatbot_agent import AGENT_AVAILABLE
+    from ..rag_agents.chatbot_agent import AGENT_AVAILABLE
     if AGENT_AVAILABLE:
         is_valid = validate_response_based_on_retrieved_content(
             response.answer,

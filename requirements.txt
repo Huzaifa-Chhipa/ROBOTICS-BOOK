@@ -1,6 +1,5 @@
-agents>=0.1.0
-tensorflow-probability>=0.20.0
 openai>=1.0.0
+openai-agents>=0.0.7
 cohere>=4.0.0
 qdrant-client>=1.8.0
 python-dotenv>=1.0.0

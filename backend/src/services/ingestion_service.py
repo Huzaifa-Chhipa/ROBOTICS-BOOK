@@ -26,7 +26,7 @@ def fetch_sitemap_urls(sitemap_url: str) -> List[str]:
         corrected_urls = []
         for url in urls:
             # Replace placeholder domain with correct one
-            corrected_url = url.replace("https://your-docusaurus-site.example.com", "https://robotics-book-kohl.vercel.app")
+            corrected_url = url.replace("https://your-docusaurus-site.example.com", "https://robotics-book-gamma.vercel.app")
             corrected_urls.append(corrected_url)
 
         logger.info(f"Found {len(corrected_urls)} URLs in sitemap (corrected domain)")
@@ -161,7 +161,7 @@ def ingest_book_content(sitemap_url: str, batch_size: int = 5):
 
 if __name__ == "__main__":
     import sys
-    DEFAULT_SITEMAP = "https://robotics-book-kohl.vercel.app/sitemap.xml"
+    DEFAULT_SITEMAP = "https://robotics-book-gamma.vercel.app/sitemap.xml"
 
     sitemap = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SITEMAP
     ingest_book_content(sitemap)

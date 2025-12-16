@@ -8,6 +8,7 @@ from ..tf_compat_patch import *
 try:
     from agents import Agent, Runner, OpenAIChatCompletionsModel, AsyncOpenAI
     from agents import set_tracing_disabled
+
 except ImportError as e:
     # Handle missing functions with mocks
     print(f"Warning: agents package import issue in openai_service: {e}")
@@ -67,3 +68,31 @@ except NotImplementedError:
 
     def get_gemini_provider():
         raise NotImplementedError("Agents not available - cannot get Gemini provider")
+
+
+async def check_connection():
+    """
+    Check if Gemini API connection is available.
+
+    Returns:
+        str: "healthy" if connection is successful, "unhealthy" otherwise
+    """
+    try:
+        # Try to make a simple API call to check connection
+        from openai import AsyncOpenAI
+        client = AsyncOpenAI(
+            api_key=os.getenv("GEMINI_API_KEY"),
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+        )
+        # Make a simple test call
+        chat_completion = await client.chat.completions.create(
+            model="gemini-2.0-flash",
+            messages=[
+                {"role": "user", "content": "test"}
+            ],
+            max_tokens=1
+        )
+        return "healthy"
+    except Exception as e:
+        print(f"Gemini API connection check failed: {e}")
+        return "unhealthy"

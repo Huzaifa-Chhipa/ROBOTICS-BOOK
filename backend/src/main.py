@@ -22,7 +22,14 @@ app = FastAPI(
 # Add CORS middleware to allow requests from the Docusaurus frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=[
+        "*",  # Allow all for development
+        "https://robotics-book-gamma.vercel.app",  # Your production domain
+        "https://robotics-book-gamma-git-main-huzaifachhipas-projects.vercel.app",  # Vercel preview deployments
+        "http://localhost:3000",  # Local Docusaurus development
+        "http://localhost:8000",  # Local backend development
+        "http://localhost:7860",  # Local backend development (FastAPI default)
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -75,4 +82,4 @@ async def read_root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=7860)

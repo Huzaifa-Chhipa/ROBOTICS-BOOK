@@ -13,9 +13,25 @@ qdrant = QdrantClient(
     api_key=QDRANT_API_KEY
 )
 
+
+async def check_connection():
+    """
+    Check if Qdrant connection is available.
+
+    Returns:
+        str: "healthy" if connection is successful, "unhealthy" otherwise
+    """
+    try:
+        # Try to list collections to verify connection
+        qdrant.get_collection(QDRANT_COLLECTION_NAME)
+        return "healthy"
+    except Exception as e:
+        print(f"Qdrant connection check failed: {e}")
+        return "unhealthy"
+
 def query_points(
     query: str,
-    limit: int = 5,
+    limit: int = 10,
     selected_chunks: Optional[List[str]] = None
 ) -> Dict[str, Any]:
     try:

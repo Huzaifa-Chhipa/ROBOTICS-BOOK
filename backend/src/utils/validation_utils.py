@@ -70,7 +70,7 @@ def validate_evidence_quotes(
     evidence_list: List[Dict[str, str]]
 ) -> bool:
     """
-    Validate that evidence quotes are ≤200 characters and are verbatim from source.
+    Validate that evidence quotes are ≤1000 characters and are verbatim from source.
 
     Args:
         evidence_list: List of evidence objects with quotes
@@ -81,7 +81,7 @@ def validate_evidence_quotes(
     for evidence in evidence_list:
         if "quote" in evidence:
             quote = evidence["quote"]
-            if len(quote) > 200:
+            if len(quote) > 1000:
                 return False
             # In a real implementation, you'd verify the quote is verbatim from source
     return True
