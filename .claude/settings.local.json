@@ -275,7 +275,8 @@
       "Bash(findstr -i \"rag\")",
       "Bash(node test_backend.js)",
       "Bash(del test_backend.js)",
-      "Bash(node test_cors.js)"
+      "Bash(node test_cors.js)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Connect frontend to Hugging Face backend\n\n- Update environment configuration to use Hugging Face backend URL\n- Fix Chatbot component to properly connect to Hugging Face backend\n- Update CORS handling for production vs local development\n- Change local backend connection from port 8000 to 7860\n- Add comprehensive error handling and debugging logs\n- Create documentation for backend connection setup\n- Add Prompt History Records for the changes made\n\nThe chatbot now connects to https://huzaifachhipa-rag-chatbot.hf.space/api/v1/ \nin production and http://localhost:7860/api/v1/ for local development.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

@@ -54,12 +54,12 @@ The connection was tested and confirmed working by making a direct API call to t
 - **Solution**: Access your space directly at https://huzaifachhipa-rag-chatbot.hf.space/ to wake it up
 
 ### CORS (Cross-Origin Resource Sharing) Policy
-- The backend is configured to allow requests from your domain: `https://robotics-book-kohl.vercel.app`
+- The backend is configured to allow requests from your domain: `https://robotics-book-gamma.vercel.app`
 - When testing locally on `localhost`, browsers enforce CORS policies that prevent cross-origin requests
 - **Solution**: The connection will work properly when the frontend is deployed to your Vercel domain
 
 ### Local Development vs Production
-- **Local testing**: Frontend connects to `http://localhost:8000/api/v1/`
+- **Local testing**: Frontend connects to `http://localhost:7860/api/v1/`
 - **Production**: Frontend connects to `https://huzaifachhipa-rag-chatbot.hf.space/api/v1/`
 - The chatbot is configured to handle both environments appropriately
 

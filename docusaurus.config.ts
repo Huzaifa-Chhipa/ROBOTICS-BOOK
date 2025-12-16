@@ -13,7 +13,7 @@ const config: Config = {
   },
 
   // ✅ YOUR REAL VERCEL DOMAIN
-  url: 'https://robotics-book-kohl.vercel.app',
+  url: 'https://robotics-book-gamma.vercel.app',
 
   // ✅ MUST be '/'
   baseUrl: '/',
