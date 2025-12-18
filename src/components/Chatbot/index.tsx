@@ -47,7 +47,7 @@ const Chatbot = () => {
 
     try {
       // 🔥 Direct API URL (no process.env needed)
-      const apiUrl = 'https://huzaifachhipa-rag-chatbot.hf.space/api/v1';
+      const apiUrl = 'https://huzaifachhipa-rag-chatbot.hf.space/api/v1/';
 
       const response = await fetch(apiUrl, {
         method: 'POST',
