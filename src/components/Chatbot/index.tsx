@@ -54,7 +54,7 @@ const Chatbot = () => {
       let apiUrl;
       if (isLocalhost) {
         // For local development, connect to your backend running on port 7860
-        apiUrl = 'http://localhost:7860/api/v1/';
+        apiUrl = 'https://huzaifachhipa-rag-chatbot.hf.space/api/v1/';
       } else {
         // Production: Use the Hugging Face backend URL
         // Docusaurus processes environment variables at build time
