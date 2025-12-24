@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "فزیکل AI اور ہیومنوڈ روبوٹکس",
+    "description": "The title in the navbar"
+  },
+  "item.label.Docs": {
+    "message": "دستاویزات",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.GitHub": {
+    "message": "گیت ہب",
+    "description": "Navbar item with label GitHub"
+  }
+}

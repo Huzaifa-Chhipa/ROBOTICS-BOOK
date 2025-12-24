@@ -1,0 +1,26 @@
+{
+  "link.title.Docs": {
+    "message": "دستاویزات",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.label.Introduction": {
+    "message": "تعارف",
+    "description": "The label of footer link with label=Introduction leading to /docs/intro"
+  },
+  "link.title.Community": {
+    "message": "کمیونٹی",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.label.Stack Overflow": {
+    "message": "اسٹیک اوور فلو",
+    "description": "The label of footer link with label=Stack Overflow"
+  },
+  "link.label.Discord": {
+    "message": "ڈسکارڈ",
+    "description": "The label of footer link with label=Discord"
+  },
+  "link.label.X": {
+    "message": "ایکس",
+    "description": "The label of footer link with label=X"
+  }
+}
